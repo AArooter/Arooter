@@ -9,8 +9,12 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
-class Location_Activity : AppCompatActivity() {
+class LocationActivity : AppCompatActivity() {
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
     private lateinit var locationManager: LocationManager
@@ -41,9 +45,16 @@ class Location_Activity : AppCompatActivity() {
                 // Do something with latitude and longitude
             }
 
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-            override fun onProviderEnabled(provider: String) {}
-            override fun onProviderDisabled(provider: String) {}
+            @Deprecated("Deprecated in Java")
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+                // Implement if Required
+            }
+            override fun onProviderEnabled(provider: String) {
+                // Implement if Required
+            }
+            override fun onProviderDisabled(provider: String) {
+                // Implement if Required
+            }
         }
 
 
@@ -73,11 +84,11 @@ object LocationUtils {
     fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
-        val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(
+        val a = sin(dLat / 2) * sin(dLat / 2) + cos(Math.toRadians(lat1)) * cos(
             Math.toRadians(lat2)
         ) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2)
-        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+                sin(dLon / 2) * sin(dLon / 2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
         return EARTH_RADIUS_KM * c // Distance in kilometers
     }
 }
